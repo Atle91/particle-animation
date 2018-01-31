@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>title</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.16/p5.js"></script>
+  <script type="text/javascript" src="sketch.js"></script>
+  <script type="text/javascript" src="particleImage.js"></script>
+</head>
+<body>
+  <h2 class="title">WebGL Particles!</h2>
+  <canvas id="myCanvas"></canvas>
+  <div class="link-container">
+    <label class="upload-label">
+    <img src="/images/drop-icon.png" class="drop-icon">
+    Drop image
+     <input type="file" class="upload" value=""/>
+   </label>
+ </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <script id="VertexShader" type="vertexShader">
+  attribute vec2 a_target;
+  attribute vec3 a_color;
+  attribute vec2 a_position;
+  attribute float a_velocity;
+
+  uniform vec4 u_positions;
+  uniform float u_random;
+  uniform float u_imgWidth;
+  uniform vec2 u_resolution;
+  uniform vec2 u_mouse;
+  varying vec3 v_color;
+
+  vec4 target;
+  vec2 positions;
+  float distanceX;
+  float distanceY;
+  float totalDistance;
+  void calcPosition();
+  vec2 currentPosition;
+
+  void main(){
+
+
+    positions = a_position;
+    float v = 0.0;
+
+    float velocity = a_velocity;
+
+    calcPosition();
+
+    if(velocity < totalDistance){
+      v = 1.0 - (velocity / totalDistance);
+    }else{
+      positions.x = a_target.x;
+      positions.y = a_target.y;
+    }
+
+    currentPosition.x = a_target.x + (distanceX * v);
+    currentPosition.y = a_target.y + (distanceY * v);
+
+
+    vec2 clipSpace =(((currentPosition / u_resolution) * 2.0 )-1.0)*-1.0;
+
+    gl_Position = vec4(clipSpace.x, clipSpace.y, 0, 1);
+    gl_PointSize = 1.0;
+
+    v_color = a_color;
+
+  }
+  void calcPosition()
+  {
+    distanceX = positions.x - a_target.x;
+    distanceY = positions.y - a_target.y;
+    totalDistance = abs(distanceX) + abs(distanceY); 
+  }
+   /*{
+
+     if(abs(mouseDistance.x) < 10.0 &&
+      abs(mouseDistance.y) < 10.0){
+
+      currentPosition = u_mouse+((mouseDistance*2.0)*sin(a_force));
+
+      //if left of cursor
+      if(mouseDistance.x < 0.0){
+        currentPosition.x = u_mouse.x;
+      }
+        //if right
+        if(mouseDistance.x > 0.0){
+          currentPosition.x += mouseDistance.x;
+        }
+        // if above
+        if(mouseDistance.y < 0.0){
+          currentPosition.y -= mouseDistance.y;
+        }
+        if(mouseDistance.y > 0.0){
+          currentPosition.y += mouseDistance.y;
+        }
+      }
+    }
+*/
+  </script>
+
+  <script id="FragmentShader" type="fragmentShader">
+    precision mediump float;
+    varying vec3 v_color;
+    void main(){
+
+
+      gl_FragColor = vec4(v_color, 1);
+    }
+  </script>
+</body>
+</html>

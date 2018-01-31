@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:200,300,400,500');
+
+.title{
+	margin-top: 50px;
+	text-align: center;
+	font-family: Raleway;
+	font-weight: 200;
+}
+#myCanvas{
+	position: absolute;
+	width: 100%;
+	height: 400px;
+	top: 35%;
+	transform: translate(0, -50%);
+	z-index: 5;
+}
+.link-container{
+	margin: auto;
+	margin-top: 500px;
+	font-family: Raleway;
+	font-weight: 400;
+	width: 600px;
+	height:50px;
+	padding: 5px 5px 5px 5px;
+	border: 2px solid #d7d7d7;
+	border-radius: 3px;
+}
+.upload{
+	position: absolute;
+	left:calc(50% - 350px);
+	width: 700px;
+	height:70px;
+	opacity: 0;
+	z-index: 2;
+	cursor: pointer;
+}
+
+.upload-label{
+	display: block;
+	margin: auto;
+	font-family: Raleway;
+	font-weight: 500;
+	font-size:17px;
+	text-align: center;
+	font-size: 22px;
+	line-height: 48px;
+	width: 600px;
+	height:50px;
+	line-height: 75px;
+	color:hsl(0, 0%, 27%);
+	outline: none;
+	cursor: pointer;
+	z-index: 0;
+}
+.send-link:hover{
+	color:black;
+	border: 1px solid hsl(0, 0%, 56%);
+}
+.drop-icon{
+	position: absolute;
+    left: calc(50% - 25px);
+    height: 40px;
+    top:578px;
+
+}
